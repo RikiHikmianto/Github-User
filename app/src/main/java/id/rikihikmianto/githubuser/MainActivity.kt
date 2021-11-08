@@ -1,8 +1,8 @@
 package id.rikihikmianto.githubuser
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSelectedGithub(data: GithubUser) {
-        Toast.makeText(this, "Memilih " + data.name, Toast.LENGTH_SHORT).show()
+        intent = Intent(this@MainActivity, DetailUser::class.java)
+        intent.putExtra(DetailUser.EXTRA_DATA, data)
+        startActivity(intent)
     }
 
     private val listGithubUser: ArrayList<GithubUser>
