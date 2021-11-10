@@ -3,6 +3,8 @@ package id.rikihikmianto.githubuser
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import id.rikihikmianto.githubuser.databinding.ItemRowUserBinding
 import java.util.*
 
@@ -30,12 +32,15 @@ class ListGithubUserAdapter(private val listGithub: ArrayList<GithubUser>) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (_, name, _, _, company, followers, following, avatar) = listGithub[position]
-        holder.binding.tvName.text = name
-        holder.binding.tvCompany.text = company
-        holder.binding.tvFollowing.text = following
-        holder.binding.tvFollowers.text = followers
-        holder.binding.imgItemAvatar.setImageResource(avatar)
+        val dataUser = listGithub[position]
+        holder.binding.tvName.text = dataUser.name
+        holder.binding.tvCompany.text = dataUser.company
+        holder.binding.tvFollowing.text = dataUser.following
+        holder.binding.tvFollowers.text = dataUser.followers
+        Glide.with(holder.itemView.context).load(dataUser.avatar)
+            .apply(RequestOptions().override(100, 100)).circleCrop()
+            .into(holder.binding.imgItemAvatar)
+
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listGithub[holder.adapterPosition])
         }
@@ -45,3 +50,4 @@ class ListGithubUserAdapter(private val listGithub: ArrayList<GithubUser>) :
         return listGithub.size
     }
 }
+
